@@ -57,6 +57,7 @@ console.log('OpenClaw config written. Starting gateway...');
 const gateway = spawn(
   'node',
   [
+    '--max-old-space-size=2048',
     './node_modules/openclaw/openclaw.mjs',
     'gateway',
     'run',
