@@ -37,10 +37,10 @@ const config = {
     }
   },
   gateway: {
-    mode: 'remote'
-  },
-  controlUi: {
-    dangerouslyAllowHostHeaderOriginFallback: true
+    mode: 'remote',
+    controlUi: {
+      dangerouslyAllowHostHeaderOriginFallback: true
+    }
   },
   plugins: {
     entries: {
