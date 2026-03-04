@@ -26,10 +26,6 @@ const config = {
     native: 'auto',
     nativeSkills: 'auto'
   },
-  ai: {
-    defaultModel: 'claude-sonnet-4-6',
-    anthropicApiKey: ANTHROPIC_API_KEY
-  },
   channels: {
     telegram: {
       enabled: true,
@@ -37,11 +33,11 @@ const config = {
       botToken: TELEGRAM_BOT_TOKEN,
       allowFrom: ['*'],
       groupPolicy: 'allowlist',
-      streamMode: 'partial'
+      streaming: 'partial'
     }
   },
   gateway: {
-    mode: 'server'
+    mode: 'remote'
   },
   plugins: {
     entries: {
