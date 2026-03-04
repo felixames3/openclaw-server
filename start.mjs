@@ -39,6 +39,9 @@ const config = {
   gateway: {
     mode: 'remote'
   },
+  controlUi: {
+    dangerouslyAllowHostHeaderOriginFallback: true
+  },
   plugins: {
     entries: {
       telegram: { enabled: true }
