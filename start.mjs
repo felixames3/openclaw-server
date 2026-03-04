@@ -60,7 +60,7 @@ const gateway = spawn(
     './node_modules/openclaw/openclaw.mjs',
     'gateway',
     'run',
-    '--bind', '0.0.0.0',
+    '--bind', 'lan',
     '--port', PORT,
     '--allow-unconfigured'
   ],
