@@ -22,6 +22,7 @@ const configDir = join(homedir(), '.openclaw');
 mkdirSync(configDir, { recursive: true });
 
 const TAVILY_API_KEY = process.env.TAVILY_API_KEY;
+const BRAVE_API_KEY = process.env.BRAVE_API_KEY;
 
 const config = {
   commands: {
@@ -56,6 +57,13 @@ const config = {
         apiKey: TAVILY_API_KEY,
         env: {
           TAVILY_API_KEY: TAVILY_API_KEY
+        }
+      },
+      'brave-search': {
+        enabled: true,
+        apiKey: BRAVE_API_KEY,
+        env: {
+          BRAVE_API_KEY: BRAVE_API_KEY
         }
       }
     }
