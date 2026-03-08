@@ -51,14 +51,6 @@ const config = {
       dangerouslyAllowHostHeaderOriginFallback: true
     }
   },
-  agents: {
-    defaults: {
-      env: {
-        DEEPGRAM_API_KEY: DEEPGRAM_API_KEY,
-        GROQ_API_KEY: GROQ_API_KEY,
-      }
-    }
-  },
   plugins: {
     entries: {
       telegram: { enabled: true }
