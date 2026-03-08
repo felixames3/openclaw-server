@@ -53,13 +53,9 @@ const config = {
     entries: {
       tavily: {
         enabled: true,
-        apiKey: {
-          source: 'env',
-          provider: 'default',
-          id: 'TAVILY_API_KEY'
-        },
+        apiKey: TAVILY_API_KEY,
         env: {
-          TAVILY_API_KEY: TAVILY_API_KEY || ''
+          TAVILY_API_KEY: TAVILY_API_KEY
         }
       }
     }
