@@ -28,6 +28,7 @@ const META_ACCESS_TOKEN = process.env.META_ADS_ACCESS_TOKEN;
 const META_AD_ACCOUNT   = process.env.META_AD_ACCOUNT_ID;
 const GROQ_API_KEY      = process.env.GROQ_API_KEY;
 const OPENAI_API_KEY    = process.env.OPENAI_API_KEY;
+const DEEPGRAM_API_KEY  = process.env.DEEPGRAM_API_KEY;
 
 const config = {
   commands: {
@@ -68,7 +69,7 @@ const config = {
         echoTranscript: true,
         echoFormat: '🎙️ "{transcript}"',
         models: [
-          { provider: 'groq', model: 'whisper-large-v3' },
+          { provider: 'deepgram', model: 'nova-3' },
           { provider: 'openai', model: 'gpt-4o-mini-transcribe' },
         ]
       }
