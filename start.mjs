@@ -21,8 +21,11 @@ if (!ANTHROPIC_API_KEY) {
 const configDir = join(homedir(), '.openclaw');
 mkdirSync(configDir, { recursive: true });
 
-const TAVILY_API_KEY = process.env.TAVILY_API_KEY;
-const BRAVE_API_KEY = process.env.BRAVE_API_KEY;
+const TAVILY_API_KEY    = process.env.TAVILY_API_KEY;
+const BRAVE_API_KEY     = process.env.BRAVE_API_KEY;
+const GH_TOKEN          = process.env.GH_TOKEN || process.env.NIGHTLY_GITHUB_TOKEN;
+const META_ACCESS_TOKEN = process.env.META_ADS_ACCESS_TOKEN;
+const META_AD_ACCOUNT   = process.env.META_AD_ACCOUNT_ID;
 
 const config = {
   commands: {
@@ -67,6 +70,23 @@ const config = {
           TAVILY_API_KEY: TAVILY_API_KEY
         }
       },
+      gh: {
+        enabled: !!GH_TOKEN,
+        env: {
+          GH_TOKEN: GH_TOKEN
+        }
+      },
+      'meta-ads-report': {
+        enabled: !!(META_ACCESS_TOKEN && META_AD_ACCOUNT),
+        env: {
+          META_ACCESS_TOKEN: META_ACCESS_TOKEN,
+          META_AD_ACCOUNT_ID: META_AD_ACCOUNT
+        }
+      },
+      'gcal-pro': {
+        enabled: !!process.env.GCAL_TOKEN_B64,
+        env: {}
+      }
     }
   }
 };
@@ -75,6 +95,25 @@ writeFileSync(
   join(configDir, 'openclaw.json'),
   JSON.stringify(config, null, 2)
 );
+
+// ── Write gcal-pro credentials from env vars (base64-encoded) ────────────────
+const gcalDir = join(homedir(), '.config', 'gcal-pro');
+mkdirSync(gcalDir, { recursive: true });
+
+if (process.env.GCAL_CLIENT_SECRET_B64) {
+  writeFileSync(
+    join(gcalDir, 'client_secret.json'),
+    Buffer.from(process.env.GCAL_CLIENT_SECRET_B64, 'base64').toString('utf8'),
+    { mode: 0o600 }
+  );
+}
+if (process.env.GCAL_TOKEN_B64) {
+  writeFileSync(
+    join(gcalDir, 'token.json'),
+    Buffer.from(process.env.GCAL_TOKEN_B64, 'base64').toString('utf8'),
+    { mode: 0o600 }
+  );
+}
 
 // ── Write persistent workspace memory ────────────────────────────────────────
 const workspaceDir = join(homedir(), '.openclaw', 'workspace');
