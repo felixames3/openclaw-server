@@ -21,6 +21,8 @@ if (!ANTHROPIC_API_KEY) {
 const configDir = join(homedir(), '.openclaw');
 mkdirSync(configDir, { recursive: true });
 
+const TAVILY_API_KEY = process.env.TAVILY_API_KEY;
+
 const config = {
   commands: {
     native: 'auto',
@@ -45,6 +47,21 @@ const config = {
   plugins: {
     entries: {
       telegram: { enabled: true }
+    }
+  },
+  skills: {
+    entries: {
+      tavily: {
+        enabled: true,
+        apiKey: {
+          source: 'env',
+          provider: 'default',
+          id: 'TAVILY_API_KEY'
+        },
+        env: {
+          TAVILY_API_KEY: TAVILY_API_KEY || ''
+        }
+      }
     }
   }
 };
