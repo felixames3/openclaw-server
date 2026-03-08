@@ -68,10 +68,8 @@ const config = {
         echoTranscript: true,
         echoFormat: '🎙️ "{transcript}"',
         models: [
-          // Groq is free tier — preferred if key is set
-          ...(GROQ_API_KEY ? [{ provider: 'groq', model: 'whisper-large-v3', apiKey: GROQ_API_KEY }] : []),
-          // OpenAI as fallback
-          ...(OPENAI_API_KEY ? [{ provider: 'openai', model: 'gpt-4o-mini-transcribe', apiKey: OPENAI_API_KEY }] : []),
+          { provider: 'groq', model: 'whisper-large-v3' },
+          { provider: 'openai', model: 'gpt-4o-mini-transcribe' },
         ]
       }
     }
@@ -110,6 +108,12 @@ const config = {
       },
       'social-media-content-calendar': {
         enabled: true
+      },
+      'free-groq-voice': {
+        enabled: !!GROQ_API_KEY,
+        env: {
+          GROQ_API_KEY: GROQ_API_KEY
+        }
       }
     }
   }
