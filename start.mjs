@@ -26,6 +26,8 @@ const BRAVE_API_KEY     = process.env.BRAVE_API_KEY;
 const GH_TOKEN          = process.env.GH_TOKEN || process.env.NIGHTLY_GITHUB_TOKEN;
 const META_ACCESS_TOKEN = process.env.META_ADS_ACCESS_TOKEN;
 const META_AD_ACCOUNT   = process.env.META_AD_ACCOUNT_ID;
+const GROQ_API_KEY      = process.env.GROQ_API_KEY;
+const OPENAI_API_KEY    = process.env.OPENAI_API_KEY;
 
 const config = {
   commands: {
@@ -59,6 +61,19 @@ const config = {
         provider: 'brave',
         apiKey: BRAVE_API_KEY,
       }
+    },
+    media: {
+      audio: {
+        enabled: true,
+        echoTranscript: true,
+        echoFormat: '🎙️ "{transcript}"',
+        models: [
+          // Groq is free tier — preferred if key is set
+          ...(GROQ_API_KEY ? [{ provider: 'groq', model: 'whisper-large-v3', apiKey: GROQ_API_KEY }] : []),
+          // OpenAI as fallback
+          ...(OPENAI_API_KEY ? [{ provider: 'openai', model: 'gpt-4o-mini-transcribe', apiKey: OPENAI_API_KEY }] : []),
+        ]
+      }
     }
   },
   skills: {
@@ -86,6 +101,15 @@ const config = {
       'gcal-pro': {
         enabled: !!process.env.GCAL_TOKEN_B64,
         env: {}
+      },
+      'gh-issues': {
+        enabled: !!GH_TOKEN,
+        env: {
+          GH_TOKEN: GH_TOKEN
+        }
+      },
+      'social-media-content-calendar': {
+        enabled: true
       }
     }
   }
