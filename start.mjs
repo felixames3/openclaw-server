@@ -50,6 +50,14 @@ const config = {
       telegram: { enabled: true }
     }
   },
+  tools: {
+    web: {
+      search: {
+        provider: 'brave',
+        apiKey: BRAVE_API_KEY,
+      }
+    }
+  },
   skills: {
     entries: {
       tavily: {
@@ -59,13 +67,6 @@ const config = {
           TAVILY_API_KEY: TAVILY_API_KEY
         }
       },
-      'brave-search': {
-        enabled: true,
-        apiKey: BRAVE_API_KEY,
-        env: {
-          BRAVE_API_KEY: BRAVE_API_KEY
-        }
-      }
     }
   }
 };
