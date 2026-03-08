@@ -67,7 +67,91 @@ writeFileSync(
   JSON.stringify(config, null, 2)
 );
 
-console.log('OpenClaw config written. Starting gateway...');
+// ── Write persistent workspace memory ────────────────────────────────────────
+const workspaceDir = join(homedir(), '.openclaw', 'workspace');
+mkdirSync(workspaceDir, { recursive: true });
+
+writeFileSync(join(workspaceDir, 'AGENTS.md'), `# Agent Operating Instructions
+
+You are an assistant for Nicholas Coleman (artist name: Felix Ames, Reunion Records).
+You are his coding partner, music business advisor, and day-to-day operator.
+
+## How to behave
+- Be direct and concise — Nick is a musician, not an engineer. Plain English always.
+- When discussing the Reunion Command Center, you have full context in MEMORY.md.
+- For coding tasks on the Reunion app, write tasks to the nightly queue rather than doing them live unless asked.
+- Always read MEMORY.md at the start of sessions to orient yourself.
+
+## Nightly coding pipeline
+Tasks go in \`nightly-tasks.md\` in the reunion-command-center repo root.
+The pipeline runs at 2am CT. Changes are NOT auto-pushed — Nick gets a Telegram
+summary in the morning with a run ID. To apply: GitHub Actions → "Apply Nightly
+Changes" → enter the run ID (optionally specify individual files).
+`);
+
+writeFileSync(join(workspaceDir, 'MEMORY.md'), `# Nick Coleman — Persistent Memory
+
+## Identity
+- **Name:** Nicholas Coleman
+- **Artist name:** Felix Ames
+- **Label:** Reunion Records
+- **Focus:** Album rollout in progress (early 2026)
+
+## Main Project: Reunion Command Center
+- **Repo:** github.com/felixames3/reunion-command-center
+- **Stack:** Next.js 16, Supabase (Postgres + Auth + RLS), Tailwind CSS, TypeScript
+- **Deployed:** Vercel (project: reunion-app, account: felixames3-8602)
+- **Dev server:** http://localhost:3000
+- **Color theme:** ochre (ochre-600, ochre-700, etc.), dark/light class names, rounded-xl cards
+
+## Features Built
+- Release management (tracks, collaborators/splits, assets)
+- BMI registration tracker (on track detail pages)
+- Social calendar surface (on release detail pages, links ContentPiece to release)
+- Release runway / timeline view (8-week countdown with milestone markers)
+- Streaming analytics (DistroKid CSV import, Spotify API)
+- Contract generator (AI-powered via Claude)
+- Content planning/calendar
+- UGC video studio (Replicate/Flux Pro, Creatomate)
+- Financial tracking (Plaid integration)
+- Social posting via Late API (Instagram @felixames 37.9k, TikTok @felixames 142.9k)
+- Meta Ads campaign automation
+- Multi-user auth with manager-artist relationships
+
+## No-Touch Zones (nightly agent rules)
+Never modify: auth flows (/src/app/(auth)/), Plaid integration, Supabase RLS policies,
+middleware.ts, .env files, AGENT_RULES.md
+
+## Nightly Coding Pipeline
+- Tasks: add to \`nightly-tasks.md\` in repo root
+- Runs: 2am CT via GitHub Actions
+- Output: patch artifact + Telegram summary (nothing auto-pushed)
+- Apply: GitHub Actions → "Apply Nightly Changes" → enter run ID
+- Draft PR created for Nick to review before merging
+
+## Key Environment & Services
+- Supabase: Postgres DB + Auth + RLS
+- Vercel: hosting (auto-deploys from main branch)
+- Railway: this OpenClaw server (Hobby plan, 8GB RAM required)
+- Telegram: primary interface for Nick ↔ agent
+- Late API: social scheduling
+- Resend: transactional email
+- Replicate: AI image/video generation
+- Creatomate: video rendering
+
+## Known Accepted Risks
+- xlsx package has moderate vulnerabilities — accepted, only used for trusted CSV imports
+- Security scan threshold raised to "high" so Dependabot PRs don't fail CI
+
+## Recent Milestones
+- Privacy page live at /privacy (all 13 sections)
+- Plaid security attestations completed (Feb 2026)
+- Streaming dashboard overhauled (Amazon/Meta/TikTok platform grouping)
+- Track-level collaborators and assets added
+- Multi-user auth ready for first users
+`);
+
+console.log('OpenClaw config and workspace memory written. Starting gateway...');
 
 // ── Start the gateway ────────────────────────────────────────────────────────
 const gateway = spawn(
