@@ -70,7 +70,6 @@ const config = {
         echoFormat: '🎙️ "{transcript}"',
         models: [
           { provider: 'deepgram', model: 'nova-3' },
-          { provider: 'openai', model: 'gpt-4o-mini-transcribe' },
         ]
       }
     }
@@ -111,10 +110,7 @@ const config = {
         enabled: true
       },
       'free-groq-voice': {
-        enabled: !!GROQ_API_KEY,
-        env: {
-          GROQ_API_KEY: GROQ_API_KEY
-        }
+        enabled: false
       }
     }
   }
