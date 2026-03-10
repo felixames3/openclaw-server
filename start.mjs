@@ -1,7 +1,10 @@
-import { writeFileSync, mkdirSync } from 'fs';
+import { writeFileSync, mkdirSync, cpSync, existsSync } from 'fs';
 import { homedir } from 'os';
-import { join } from 'path';
+import { join, dirname } from 'path';
+import { fileURLToPath } from 'url';
 import { spawn } from 'child_process';
+
+const __dirname = dirname(fileURLToPath(import.meta.url));
 
 // ── Required environment variables ──────────────────────────────────────────
 const TELEGRAM_BOT_TOKEN = process.env.TELEGRAM_BOT_TOKEN;
@@ -245,6 +248,21 @@ middleware.ts, .env files, AGENT_RULES.md
 - Track-level collaborators and assets added
 - Multi-user auth ready for first users
 `);
+
+// ── Copy bundled skills into ~/.openclaw/skills ───────────────────────────────
+const bundledSkillsDir = join(__dirname, 'skills');
+const openclawSkillsDir = join(homedir(), '.openclaw', 'skills');
+mkdirSync(openclawSkillsDir, { recursive: true });
+
+if (existsSync(bundledSkillsDir)) {
+  const { readdirSync } = await import('fs');
+  for (const skill of readdirSync(bundledSkillsDir)) {
+    const src = join(bundledSkillsDir, skill);
+    const dest = join(openclawSkillsDir, skill);
+    cpSync(src, dest, { recursive: true });
+    console.log(`Installed skill: ${skill}`);
+  }
+}
 
 console.log('OpenClaw config and workspace memory written. Starting gateway...');
 
