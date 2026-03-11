@@ -80,10 +80,17 @@ const config = {
   skills: {
     entries: {
       tavily: {
-        enabled: true,
+        enabled: !!TAVILY_API_KEY,
         apiKey: TAVILY_API_KEY,
         env: {
           TAVILY_API_KEY: TAVILY_API_KEY
+        }
+      },
+      brave: {
+        enabled: !!BRAVE_API_KEY,
+        apiKey: BRAVE_API_KEY,
+        env: {
+          BRAVE_API_KEY: BRAVE_API_KEY
         }
       },
       gh: {
