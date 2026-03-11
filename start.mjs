@@ -62,8 +62,8 @@ const config = {
   tools: {
     web: {
       search: {
-        provider: 'tavily',
-        apiKey: TAVILY_API_KEY,
+        provider: 'brave',
+        apiKey: BRAVE_API_KEY,
       }
     },
     media: {
