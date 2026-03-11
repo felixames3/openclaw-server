@@ -285,7 +285,7 @@ const gateway = spawn(
     '--port', PORT,
     '--allow-unconfigured'
   ],
-  { stdio: 'inherit', env: { ...process.env, DEEPGRAM_API_KEY, GROQ_API_KEY, OPENAI_API_KEY: process.env.OPENAI_API_KEY } }
+  { stdio: 'inherit', env: { ...process.env, DEEPGRAM_API_KEY, GROQ_API_KEY, OPENAI_API_KEY: process.env.OPENAI_API_KEY, BRAVE_API_KEY } }
 );
 
 gateway.on('exit', (code) => {
